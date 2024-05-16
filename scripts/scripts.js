@@ -1,3 +1,4 @@
+import { buildBlogBlocks } from './blog.js';
 import {
   sampleRUM,
   buildBlock,
@@ -49,6 +50,7 @@ async function loadFonts() {
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
+    buildBlogBlocks(main);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);

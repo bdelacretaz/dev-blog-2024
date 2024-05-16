@@ -1,0 +1,20 @@
+main .tags ul {
+  border-top: solid grey 1px;
+  padding-top: 1em;
+  list-style-type: none;
+}
+
+/** It'd be better to avoid generating tags in those elements */
+header .tags,
+footer .tags {
+  display:none;
+}
+
+.tags li {
+  display: inline;
+  border-radius: 15px;
+  border: solid grey 1px;
+  padding: 5px;
+  margin: 5px;
+  background-color: beige;
+}
