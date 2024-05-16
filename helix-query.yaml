@@ -7,7 +7,7 @@ indices:
       - /tags/**
     target: /query-index.json
     properties:
-      m_date:
+      date:
           select: head > meta[name="m_date"]
           value: attribute(el, "content")
       title:
