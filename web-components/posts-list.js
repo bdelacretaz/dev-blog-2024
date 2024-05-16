@@ -25,6 +25,9 @@ class PostsList extends HTMLElement {
       a.href = entry.path;
       a.textContent = entry.title;
       li.append(a);
+      const span = document.createElement('span');
+      span.textContent = ` - ${entry.author}`;
+      li.append(span);
       ul.append(li);
     })
     this.append(n);
