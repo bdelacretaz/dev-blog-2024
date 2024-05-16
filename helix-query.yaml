@@ -4,6 +4,7 @@ indices:
       - /**
     exclude:
       - /authors/**
+      - /tags/**
     target: /query-index.json
     properties:
       m_date:
