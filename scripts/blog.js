@@ -25,7 +25,8 @@ function loadWebComponents() {
 function buildTagsBlock(main) {
   const tagsArray = [...document.head.querySelectorAll('meta[property="article:tag"]')].map((el) => el.content) || [];
   const tagsBlock = buildBlock('tags', tagsArray.join(', '));
-  main.lastElementChild.append(tagsBlock);
+  const title = main.querySelector('h1');
+  title.parentNode.insertBefore(tagsBlock, title.nextSibling);
 }
 
 function buildAuthorCardBlock(main) {
@@ -56,8 +57,8 @@ export async function buildBlogBlocks(main) {
   if(window.location.pathname.match(/^\/tags\//)) {
     buildTagsPage(main);
   } else {
-    buildTagsBlock(main);
     buildAuthorCardBlock(main);
+    buildTagsBlock(main);
   }
   loadWebComponents();
 }

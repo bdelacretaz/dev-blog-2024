@@ -1,7 +1,11 @@
+main .tags {
+  text-align: center;
+}
+
 main .tags ul {
-  border-top: solid grey 1px;
   padding-top: 1em;
   list-style-type: none;
+  font-size: 80%;
 }
 
 /** It'd be better to avoid generating tags in those elements */

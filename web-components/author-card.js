@@ -6,7 +6,7 @@ class AuthorCard extends HTMLElement {
       width:50px;
     }
     author-card { 
-      text-align: right;
+      text-align: center;
       font-style: italic;
       font-size: 80%;
     }
@@ -14,9 +14,9 @@ class AuthorCard extends HTMLElement {
   static {
     AuthorCard.template.innerHTML = `
     <div>
+      <img>
       By <a></a>
       on <span></span>
-      <img>
     </div>`;
   }
   static {
