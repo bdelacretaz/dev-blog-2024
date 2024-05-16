@@ -4,6 +4,13 @@ import {
   getMetadata
 } from './aem.js';
 
+// Map some names from the original content
+// to get the correct image filenames
+const authorNamesMap = {
+  "Zuri Klaschka (they/them)" : "Zuri Klaschka",
+  "Bianca Costache (Teşilă)" : "Bianca Costache"
+};
+
 function loadWebComponents() {
   // List all components here that are found
   // in our web-components folder. This function
@@ -26,13 +33,21 @@ function buildTagsBlock(main) {
   main.lastElementChild.append(tagsBlock);
 }
 
+// Must be consistent with the mapping from
+// names to image filenames used when importing
+function getAuthorId(name) {
+  const mapped = authorNamesMap[name];
+  const n = mapped ? mapped : name;
+  return n.toLowerCase().replace(/[^a-zA-Z0-9]/g,'-');
+}
+
 function buildAuthorCardBlock(main) {
   const title = main.querySelector('h1');
   const author = getMetadata('author');
   if(title && author) {
     const c = document.createElement('author-card');
     c.setAttribute('name', author);
-    c.setAttribute('id', getMetadata('author_id'));
+    c.setAttribute('id', getAuthorId(author));
     c.setAttribute('date', getMetadata('m_date'));
     title.parentNode.insertBefore(c, title.nextSibling);
 }

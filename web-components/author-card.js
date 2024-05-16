@@ -39,7 +39,7 @@ class AuthorCard extends HTMLElement {
 
     const img = n.querySelector('img')
     img.src = `/images/authors/${id}.png`;
-    img.alt = `Image of ${name}`;
+    img.alt = `Image of ${name}, author of this blog post`;
     this.append(n);
   }
 }
