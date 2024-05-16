@@ -1,15 +1,9 @@
 // Blog-specific scripts
+import { getAuthorId } from './authors.js';
 import {
   buildBlock,
   getMetadata
 } from './aem.js';
-
-// Map some names from the original content
-// to get the correct image filenames
-const authorNamesMap = {
-  "Zuri Klaschka (they/them)" : "Zuri Klaschka",
-  "Bianca Costache (Teşilă)" : "Bianca Costache"
-};
 
 function loadWebComponents() {
   // List all components here that are found
@@ -31,14 +25,6 @@ function buildTagsBlock(main) {
   const tagsArray = [...document.head.querySelectorAll('meta[property="article:tag"]')].map((el) => el.content) || [];
   const tagsBlock = buildBlock('tags', tagsArray.join(', '));
   main.lastElementChild.append(tagsBlock);
-}
-
-// Must be consistent with the mapping from
-// names to image filenames used when importing
-function getAuthorId(name) {
-  const mapped = authorNamesMap[name];
-  const n = mapped ? mapped : name;
-  return n.toLowerCase().replace(/[^a-zA-Z0-9]/g,'-');
 }
 
 function buildAuthorCardBlock(main) {
