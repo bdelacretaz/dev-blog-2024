@@ -5,7 +5,7 @@ indices:
     exclude:
       - /authors/**
       - /tags/**
-    target: /query-posts.json
+    target: /query-index.json
     properties:
       m_date:
           select: head > meta[name="m_date"]
