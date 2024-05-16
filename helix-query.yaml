@@ -1,0 +1,20 @@
+indices:
+  devblog:
+    include:
+      - /**
+    exclude:
+      - /authors/**
+    target: /query-index.json
+    properties:
+      m_date:
+          select: head > meta[name="m_date"]
+          value: attribute(el, "content")
+      title:
+          select: head > meta[property="og:title"]
+          value: attribute(el, "content")
+      author:
+          select: head > meta[name="author"]
+          value: attribute(el, "content")
+      tags:
+          select: head > meta[property="article:tag"]
+          values: attribute(el, "content")
