@@ -11,7 +11,8 @@ function loadWebComponents() {
   // loads those which are found in the document.
   [
     'author-card',
-    'tag-page'
+    'tag-page',
+    'posts-list'
   ].forEach(name => {
     if(document.querySelector(name)) {
       const script = document.createElement('script');
@@ -48,9 +49,13 @@ function getTagFromUrl() {
 }
 
 function buildTagsPage(main) {
-  const c = document.createElement('tag-page');
-  c.setAttribute('tag', getTagFromUrl());
-  main.append(c);
+  if(main.parentNode?.localName == 'body') {
+    const tag = getTagFromUrl();
+    const c = document.createElement('posts-list');
+    c.setAttribute('tags', tag);
+    c.setAttribute('title', `${tag} tag`);
+    main.append(c);
+  }
 }
 
 export async function buildBlogBlocks(main) {
@@ -61,4 +66,18 @@ export async function buildBlogBlocks(main) {
     buildTagsBlock(main);
   }
   loadWebComponents();
+}
+
+// Extracts data from a block, using the first
+// column as names and second column as values
+export function getBlockData(block) {
+  let result = {};
+  block.querySelectorAll('div').forEach(div => {
+    const name = div.querySelector('div')?.textContent;
+    if(name) {
+      const value = div.querySelector('div :nth-child(2)')?.textContent;
+      result[name] = value;
+    }
+  });
+  return result;
 }
