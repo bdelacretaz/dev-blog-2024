@@ -1,5 +1,3 @@
-import { getQueryIndex } from '../../scripts/query-index.js';
-
 class TagPage extends HTMLElement {
   static template = document.createElement('template');
   static style = `
@@ -34,7 +32,7 @@ class TagPage extends HTMLElement {
     n.querySelector('h2 span').textContent = this.tag;
 
     const ul = n.querySelector('ul');
-    const index = await getQueryIndex();
+    const index = await window.devblog?.index.get();
     index?.data?.forEach(entry => {
       const tags = JSON.parse(entry.tags);
       if(tags.includes(this.tag)) {

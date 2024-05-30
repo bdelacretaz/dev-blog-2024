@@ -1,11 +1,10 @@
 import { getAuthorId } from '../../scripts/authors.js';
-import { getQueryIndex } from '../../scripts/query-index.js';
 let idToName;
 
 export async function getAuthorName(id) {
   if(!idToName) {
     const result = {};
-    const index = await getQueryIndex();
+    const index = await window.devblog.index.get();
     index?.data?.forEach(entry => {
       if(entry.author) {
         result[getAuthorId(entry.author)] = entry.author;
@@ -28,7 +27,7 @@ export default async function decorate($block) {
   const name = await getAuthorName(id);
   $block.innerHTML = `<div><h1>${name}</h1><img src='/images/authors/${id}.png'><h2>Posts</h2><ul></ul></div>`;
   const ul = $block.querySelector('ul');
-  const index = await getQueryIndex();
+  const index = await window.devblog.index.get();
   index?.data?.forEach(entry => {
     if(entry.author === name) {
       const li = document.createElement('li');

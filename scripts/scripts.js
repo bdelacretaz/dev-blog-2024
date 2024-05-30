@@ -1,3 +1,4 @@
+import './query-index.js';
 import { buildBlogBlocks } from './blog.js';
 import {
   sampleRUM,

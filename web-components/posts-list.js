@@ -1,5 +1,3 @@
-import { getQueryIndex } from '../scripts/query-index.js';
-
 class PostsList extends HTMLElement {
   static template = document.createElement('template');
   static style = `
@@ -17,7 +15,7 @@ class PostsList extends HTMLElement {
 
   async connectedCallback() {
     const n = PostsList.template.content.cloneNode(true);
-    const index = await getQueryIndex();
+    const index = await window.devblog.index.get();
     const ul = n.querySelector('ol');
     index.data?.filter(e => e.date).forEach(entry => {
       const li = document.createElement('li');

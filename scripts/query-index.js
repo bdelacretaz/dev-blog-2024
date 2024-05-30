@@ -1,15 +1,23 @@
-// Access the query-index data
+// Setup for accessing the query-index data
 // TODO do we need to cache the index in a different way? Local storage ?
-let index;
+export class QueryIndex {
+  static #index;
 
-export async function getQueryIndex() {
-  if(!index) {
-    // TODO multiple requests with lower limit?
-    const resp = await fetch('/query-index.json?limit=9999');
-    if(resp.ok) {
-      index = JSON.parse(await resp.text());
+  static {
+    if(!window.devblog) {
+      window.devblog = {};
     }
+    window.devblog.index = new QueryIndex();
   }
-  return index;
-}
 
+  async get() {
+    if(!QueryIndex.#index) {
+      // TODO multiple requests with lower limit?
+      const resp = await fetch('/query-index.json?limit=9999');
+      if(resp.ok) {
+        QueryIndex.#index = JSON.parse(await resp.text());
+      }
+    }
+  return QueryIndex.#index;
+  }
+}
