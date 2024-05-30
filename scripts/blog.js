@@ -12,7 +12,8 @@ function loadWebComponents() {
   [
     'author-card',
     'tag-page',
-    'posts-list'
+    'posts-list',
+    'inline-gist'
   ].forEach(name => {
     if(document.querySelector(name)) {
       const script = document.createElement('script');
@@ -58,12 +59,23 @@ function buildTagsPage(main) {
   }
 }
 
+// Gists are not separated as blocks in the original content, need
+// to process them inline
+function processGists(main) {
+  main.querySelectorAll('a[href^="https://gist.github.com/"]').forEach(a => {
+    const ig = document.createElement('inline-gist');
+    ig.setAttribute('href', a.href);
+    a.replaceWith(ig);
+  })
+}
+
 export async function buildBlogBlocks(main) {
   if(window.location.pathname.match(/^\/tags\//)) {
     buildTagsPage(main);
   } else {
     buildAuthorCardBlock(main);
     buildTagsBlock(main);
+    processGists(main);
   }
   loadWebComponents();
 }
