@@ -45,7 +45,7 @@ function buildAuthorCardBlock(main) {
 
 function getTagFromUrl() {
   const path = window.location.pathname;
-  const result = path.match(/\/tags\/(.*)$/);
+  const result = path.match(/\/tagged\/(.*)$/);
   return result?.[1];
 }
 
@@ -70,7 +70,7 @@ function processGists(main) {
 }
 
 export async function buildBlogBlocks(main) {
-  if(window.location.pathname.match(/^\/tags\//)) {
+  if(window.location.pathname.match(/^\/tagged\//)) {
     buildTagsPage(main);
   } else {
     buildAuthorCardBlock(main);
