@@ -3,4 +3,4 @@ mountpoints:
 
 folders:
   /authors: /generic-author
-  /tags: /generic-tags  
+  /tagged: /generic-tagged

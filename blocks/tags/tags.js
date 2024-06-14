@@ -5,7 +5,7 @@ export default async function decorate(block) {
     tags.split(',').sort().map(tag => tag.trim()).forEach(tag => {
       const li = document.createElement('li');
       const a = document.createElement('a');
-      a.setAttribute('href', `/tags/${tag}`);
+      a.setAttribute('href', `/tagged/${tag}`);
       a.textContent = tag;
       li.append(a);
       ul.append(li);
