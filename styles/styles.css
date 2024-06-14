@@ -39,6 +39,11 @@
 
   /* nav height */
   --nav-height: 64px;
+
+  /* lists of posts */
+  --single-post-card-width: 200px;
+  --single-post-card-margin: 10px;
+  --single-post-card-img-height: 150px;
 }
 
 @font-face {
