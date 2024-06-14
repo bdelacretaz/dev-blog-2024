@@ -19,3 +19,6 @@ indices:
       tags:
           select: head > meta[property="article:tag"]
           values: attribute(el, "content")
+      image:
+          select: head > meta[property="og:image"]
+          values: attribute(el, "content")
