@@ -213,3 +213,9 @@ main .section.light,
 main .section.highlight {
   background-color: var(--light-color);
 }
+
+.posts-featured-container posts-list {
+  float: right;
+  width: 40%;
+  font-size:80%;
+}

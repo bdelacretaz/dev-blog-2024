@@ -45,6 +45,38 @@ class PostsList extends HTMLElement {
     return result;
   }
 
+  #buildSinglePostCard(entry) {
+    const spc = document.createElement('single-post-card');
+    spc.setAttribute('path', entry.path);
+    spc.setAttribute('title', entry.title);
+    spc.setAttribute('author', entry.author);
+    if(!this.textOnly) {
+      spc.setAttribute('image', this.cleanupImage(entry.image));
+    }
+    return spc;
+  }
+
+  #addPostsByAttributes(index, ul) {
+    index.data?.filter(p => p.date && this.matchTags(p) && this.matchAuthor(p)).slice(0,this.limit).forEach(entry => {
+      const li = document.createElement('li');
+      li.append(this.#buildSinglePostCard(entry));
+      ul.append(li);
+    })
+  }
+
+  #addPostsFromLinks(index, ul) {
+    // Collect our links and find matching entries in index
+    const selected = [];
+    this.querySelectorAll('a').forEach(a => {
+      selected.push(new URL(a.href).pathname);
+    });
+    index.data?.filter(p => selected.includes(p.path)).forEach(entry => {
+      const li = document.createElement('li');
+      li.append(this.#buildSinglePostCard(entry));
+      ul.append(li);
+    });
+  }
+
   async connectedCallback() {
     const title = this.getAttribute('title');
     if(title) {
@@ -53,26 +85,26 @@ class PostsList extends HTMLElement {
       this.append(h);
     }
 
+    const index = await window.devblog.index.get();
     const t = this.getAttribute('tags');
     this.tags = t ? t.toLowerCase().split(',') : null;
     this.author = this.getAttribute('author');
     const limitAttr = this.getAttribute('limit');
+    this.limit = limitAttr ? Number(limitAttr) : index?.data?.length;
+    this.selectLinks = this.getAttribute('select-links') == 'true';
+    this.textOnly = this.getAttribute('text-only') == 'true';
 
     const n = PostsList.template.content.cloneNode(true);
-    const index = await window.devblog.index.get();
-    const limit = limitAttr ? Number(limitAttr) : index?.data?.length;
-    const ul = n.querySelector('ul');
-    index.data?.filter(p => p.date && this.matchTags(p) && this.matchAuthor(p)).slice(0,limit).forEach(entry => {
-      const li = document.createElement('li');
-      const spc = document.createElement('single-post-card');
-      spc.setAttribute('path', entry.path);
-      spc.setAttribute('title', entry.title);
-      spc.setAttribute('author', entry.author);
-      spc.setAttribute('image', this.cleanupImage(entry.image));
-      li.append(spc);
-      ul.append(li);
-    })
-    this.append(n);
+    if(this.selectLinks) {
+      this.#addPostsFromLinks(index, n.querySelector('ul'));
+      this.replaceChildren(n);
+    } else {
+      this.#addPostsByAttributes(index, n.querySelector('ul'));
+      this.append(n);
+    }
+    if(this.textOnly) {
+      this.classList.add('text-only');
+    }
   }
 }
 

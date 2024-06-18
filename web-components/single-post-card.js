@@ -45,7 +45,12 @@ class SinglePostCard extends HTMLElement {
     authorA.textContent = author;
     authorA.href = `/authors/${getAuthorId(author)}`;
 
-    t.querySelector('img').setAttribute('src', this.getAttribute('image'));
+    const image = this.getAttribute('image');
+    if(image) {
+      t.querySelector('img').setAttribute('src', image);
+    } else {
+      t.querySelector('div[class=img]').remove();
+    }
     this.append(t);
   }
 }
